@@ -1,13 +1,44 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
+#include <iostream>
+using namespace std;
+struct tcovjek{
+  char ime[40],prezime[40],valuta[30];
+	int godina,ai_vrijemeulaska,bi_vrijemezadrzavanja,ci_prioritet,di_transakcija;
+	float stanje_tekuci,stanje_devizni;
+};
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+struct tsalter{
+	int front,rear;
+	tcovjek*polje_ljudi[10000];
+};
+
+
+void init(tsalter*neki_red){
+	neki_red->front=0;
+	neki_red->rear=9999;
+}
+
+int ADDONE(int rear){
+	rear=(rear+1)%10000;
+	return rear;
+}
+
+void enqueue(tsalter*neki_red,tcovjek*neka_osoba){
+	int zadnja_pozicija=neki_red->rear;
+	zadnja_pozicija=ADDONE(zadnja_pozicija);
+	neki_red->polje_ljudi[zadnja_pozicija]=neka_osoba;
+	neki_red->rear=zadnja_pozicija;
+}
+
+void dequeue(tsalter*neki_red){
+	neki_red->front=ADDONE(neki_red->front);
+}
+
+bool isempty(tsalter*neki_red){
+	if(ADDONE(neki_red->rear)==neki_red->front)return true;
+	else return false;
+}
+
+tcovjek*front(tsalter*neki_red){
+	return neki_red->polje_ljudi[neki_red->front];
+}
